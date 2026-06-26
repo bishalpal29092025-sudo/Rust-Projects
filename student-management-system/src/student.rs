@@ -134,3 +134,4 @@ fn display_student(student: &Student){
     println!("Marks  : {:.2}", student.marks);
     println!("Grade  : {}", grade_to_string(&student.grade));
 }
+
