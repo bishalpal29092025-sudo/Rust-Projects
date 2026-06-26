@@ -1,4 +1,4 @@
-use crate::input::{read_f32, read_string, read_u8};
+use crate::input::{read_f32, read_string, read_u32, read_u8};
 use crate::models::{Grade, Student};
 
 pub fn show_menu() {
@@ -90,4 +90,47 @@ fn grade_to_string(grade: &Grade) -> &'static str {
         Grade::D => "D",
         Grade::F => "F",
     }
+}
+
+
+pub fn search_student(students: &Vec<Student>) {
+    println!();
+    println!("===== Search Student =====");
+    println!("1. Search by ID");
+    println!("1. Search by Name");
+
+    let choice = read_u32("Choose an Option: ");
+    match choice {
+        1 => search_by_id(students),
+        2 => search_by_name(students),
+        _ => println!("Invalid option.");
+    }
+}
+
+fn search_by_id(students: &Vec<Student>) {
+    let id = read_u32("Enter Student ID: ");
+    match students.iter().find(|student | student.id == id) {
+        Some(student) => display_student(student),
+        None => println!("Student not found."),
+    }
+}
+
+fn search_by_name(students: &Vec<Student>) {
+    let name = read_string("Enter Student Name: ");
+    match students.iter().find(|student.name.eq_ignore_ascii_case(&name))
+    {
+        Some(student) => display_student(student),
+        None => println!("Student not found."),
+    }
+}
+
+fn display_student(student: &Student){
+    println!();
+    println!("Student Found");
+    println!("--------------------------");
+    println!("ID     : {}", student.id);
+    println!("Name   : {}", student.name);
+    println!("Age    : {}", student.age);
+    println!("Marks  : {:.2}", student.marks);
+    println!("Grade  : {}", grade_to_string(&student.grade));
 }
