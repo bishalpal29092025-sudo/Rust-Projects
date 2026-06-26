@@ -18,7 +18,7 @@ fn main() {
         match choice {
             1 => student::add_student(&mut students, &mut next_id),
             2 => student::view_students(&students),
-            3 => println!("Search Student (Coming Soon)"),
+            3 => student::search_student(&students),
             4 => println!("Update Student (Coming Soon)"),
             5 => println!("Delete Student (Coming Soon)"),
             6 => println!("Statistics (Coming Soon)"),
