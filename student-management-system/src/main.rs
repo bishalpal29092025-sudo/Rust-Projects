@@ -17,10 +17,15 @@ fn main() {
 
         match choice {
             1 => student::add_student(&mut students, &mut next_id),
+
             2 => student::view_students(&students),
+
             3 => student::search_student(&students),
+
             4 => student::update_student(&mut students),
-            5 => println!("Delete Student (Coming Soon)"),
+
+            5 => student::delete_student(&mut students),
+
             6 => println!("Statistics (Coming Soon)"),
 
             7 => {
@@ -31,5 +36,4 @@ fn main() {
             _ => println!("Invalid option."),
         }
     }
-
 }

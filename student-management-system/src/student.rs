@@ -160,3 +160,17 @@ pub fn update_student(students: &mut Vec<Student>){
     }
 }
 
+pub fn delete_student(students: &mut Vec<Student>) {
+    println!("\n===== Delete Student =====");
+
+    let id = read_u32("Enter Student ID: ");
+    let initial_count = students.len();
+
+    students.retain(|student | student.id != id);
+
+    if students.len() < initial_count {
+        println!("Student deleted successfully!");
+    } else {
+        println!("Student not found.");
+    }
+}
