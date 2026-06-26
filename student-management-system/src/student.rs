@@ -1,3 +1,6 @@
+use crate::input::{read_f32, read_string, read_u8};
+use crate::models::{Grade, Student};
+
 pub fn show_menu() {
     println!();
     println!("==============================");
@@ -10,4 +13,81 @@ pub fn show_menu() {
     println!("5. Delete Student");
     println!("6. Statistics");
     println!("7. Exit");
+}
+
+
+pub fn add_student(students: &mut Vec<Student>, next_id: &mut u32) {
+    println!("\n===== Add Student =====");
+
+    let name = read_string("Enter Name: ");
+    let age = read_u8("Enter Age: ");
+    let marks = read_f32("Enter Marks: ");
+
+    let grade = calculate_grade(marks);
+
+    let student = Student {
+        id: *next_id,
+        name,
+        age,
+        marks,
+        grade,
+    };
+
+    students.push(student);
+
+    *next_id += 1;
+
+    println!("Student Added Successfully!");
+}
+
+
+pub fn view_students(students: &Vec<Student>) {
+    if students.is_empty() {
+        println!("No students found.");
+        return;
+    }
+
+    println!();
+    println!(
+        "{:<5} {:<20} {:<5} {:<10} {:<10}",
+        "ID", "Name", "Age", "Marks", "Grade"
+    );
+
+    println!("{}", "-".repeat(60));
+
+    for student in students{
+        println!(
+            "{:<5} {:<20} {:<5} {:<10.2} {:<10}",
+            student.id,
+            student.name,
+            student.age,
+            student.marks,
+            grade_to_string(&student.grade)
+        );
+    }
+}
+
+
+fn calculate_grade(marks: f32) -> Grade {
+    if marks >= 90.0 {
+        Grade::A
+    }else if marks >= 80.0 {
+        Grade::B
+    }else if marks >= 70.0 {
+        Grade::C
+    }else if marks >= 60.0 {
+        Grade::D
+    }else {
+        Grade::F
+    }
+}
+
+fn grade_to_string(grade: &Grade) -> &'static str {
+    match grade {
+        Grade::A => "A",
+        Grade::B => "B",
+        Grade::C => "C",
+        Grade::D => "D",
+        Grade::F => "F",
+    }
 }

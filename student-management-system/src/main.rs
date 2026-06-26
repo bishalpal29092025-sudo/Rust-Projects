@@ -5,40 +5,23 @@ mod student;
 
 use input::read_u32;
 use models::Student;
-use student::show_menu;
 
 fn main() {
-    let students: Vec<Student> = Vec::new();
+    let mut students: Vec<Student> = Vec::new();
+    let mut next_id: u32 = 1;
 
     loop {
-        show_menu();
+        student::show_menu();
 
         let choice = read_u32("Choose an option: ");
 
         match choice {
-            1 => {
-                println!("Add Student (Coming Soon)");
-            }
-
-            2 => {
-                println!("View Students (Coming Soon)");
-            }
-
-            3 => {
-                println!("Search Student (Coming Soon)");
-            }
-
-            4 => {
-                println!("Update Student (Coming Soon)");
-            }
-
-            5 => {
-                println!("Delete Student (Coming Soon)");
-            }
-
-            6 => {
-                println!("Statistics (Coming Soon)");
-            }
+            1 => student::add_student(&mut students, &mut next_id),
+            2 => student::view_students(&students),
+            3 => println!("Search Student (Coming Soon)"),
+            4 => println!("Update Student (Coming Soon)"),
+            5 => println!("Delete Student (Coming Soon)"),
+            6 => println!("Statistics (Coming Soon)"),
 
             7 => {
                 println!("Goodbye!");
@@ -48,7 +31,5 @@ fn main() {
             _ => println!("Invalid option."),
         }
     }
-
-    drop(students);
 
 }

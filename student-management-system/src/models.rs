@@ -4,7 +4,7 @@ pub enum Grade{
     B,
     C,
     D,
-    E,
+    F,
 }
 
 
@@ -14,5 +14,5 @@ pub struct Student{
     pub name: String,
     pub age: u8,
     pub marks: f32,
-    pub grade: Grade
+    pub grade: Grade,
 }
