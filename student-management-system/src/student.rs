@@ -135,3 +135,28 @@ fn display_student(student: &Student){
     println!("Grade  : {}", grade_to_string(&student.grade));
 }
 
+
+
+// Update Student 
+pub fn update_student(students: &mut Vec<Student>){
+    println!("\n===== Update Student =====");
+
+    let id = read_u32("Enter Student ID: ");
+    match students.iter_mut().find(|student | student.id == id) {
+        Some(student) => {
+            println!("Current Name: {}", student.name);
+            println!("Current Age: {}", student.age);
+            println!("Current Marks: {:.2}", student.marks);
+
+            student.name = read_string("Enter New Name: ");
+            student.age = read_u8("Enter New Age: ");
+            student.marks = read_f32("Enter the new Marks: ");
+
+            student.grade = calculate_grade(student.marks);
+
+            println!("\n Student Details Updated Successfully!");
+        }
+        None => println!("Student not found.")
+    }
+}
+
