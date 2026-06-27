@@ -16,24 +16,28 @@ fn main() {
         let choice = read_u32("Choose an option: ");
 
         match choice {
-            1 => student::add_student(&mut students, &mut next_id),
+    1 => student::add_student(&mut students, &mut next_id),
 
-            2 => student::view_students(&students),
+    2 => student::view_students(&students),
 
-            3 => student::search_student(&students),
+    3 => student::search_student(&students),
 
-            4 => student::update_student(&mut students),
+    4 => student::update_student(&mut students),
 
-            5 => student::delete_student(&mut students),
+    5 => student::delete_student(&mut students),
 
-            6 => println!("Statistics (Coming Soon)"),
+    6 => statistics::show_statistics(&students),
 
-            7 => {
-                println!("Goodbye!");
-                break;
-            }
+    7 => student::sort_students(&mut students),
 
-            _ => println!("Invalid option."),
-        }
+    8 => student::filter_students(&students),
+
+    9 => {
+        println!("Goodbye!");
+        break;
+    }
+
+    _ => println!("Invalid Option"),
+}
     }
 }

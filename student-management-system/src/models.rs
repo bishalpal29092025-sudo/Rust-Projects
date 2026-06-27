@@ -1,5 +1,5 @@
-#[derive(Debug, Clone)]
-pub enum Grade{
+#[derive(Debug, Clone, PartialEq)]
+pub enum Grade {
     A,
     B,
     C,

@@ -6,15 +6,19 @@ pub fn show_menu() {
     println!("==============================");
     println!(" Student Management System");
     println!("==============================");
+
     println!("1. Add Student");
-    println!("2. View Student");
+    println!("2. View Students");
     println!("3. Search Student");
     println!("4. Update Student");
     println!("5. Delete Student");
     println!("6. Statistics");
-    println!("7. Exit");
+    println!("7. Sort Students");
+    println!("8. Filter Students");
+    println!("9. Exit");
 }
 
+// Add Students
 
 pub fn add_student(students: &mut Vec<Student>, next_id: &mut u32) {
     println!("\n===== Add Student =====");
@@ -40,6 +44,23 @@ pub fn add_student(students: &mut Vec<Student>, next_id: &mut u32) {
     println!("Student Added Successfully!");
 }
 
+fn calculate_grade(marks: f32) -> Grade {
+    if marks >= 90.0 {
+        Grade::A
+    }else if marks >= 80.0 {
+        Grade::B
+    }else if marks >= 70.0 {
+        Grade::C
+    }else if marks >= 60.0 {
+        Grade::D
+    }else {
+        Grade::F
+    }
+}
+
+
+
+// View Students
 
 pub fn view_students(students: &Vec<Student>) {
     if students.is_empty() {
@@ -68,19 +89,6 @@ pub fn view_students(students: &Vec<Student>) {
 }
 
 
-fn calculate_grade(marks: f32) -> Grade {
-    if marks >= 90.0 {
-        Grade::A
-    }else if marks >= 80.0 {
-        Grade::B
-    }else if marks >= 70.0 {
-        Grade::C
-    }else if marks >= 60.0 {
-        Grade::D
-    }else {
-        Grade::F
-    }
-}
 
 fn grade_to_string(grade: &Grade) -> &'static str {
     match grade {
@@ -92,6 +100,9 @@ fn grade_to_string(grade: &Grade) -> &'static str {
     }
 }
 
+
+
+// Search Students
 
 pub fn search_student(students: &Vec<Student>) {
     println!();
@@ -160,6 +171,9 @@ pub fn update_student(students: &mut Vec<Student>){
     }
 }
 
+
+// Delete Students
+
 pub fn delete_student(students: &mut Vec<Student>) {
     println!("\n===== Delete Student =====");
 
@@ -172,5 +186,97 @@ pub fn delete_student(students: &mut Vec<Student>) {
         println!("Student deleted successfully!");
     } else {
         println!("Student not found.");
+    }
+}
+
+pub fn sort_students(students: &mut Vec<Student>) {
+    println!("\n===== Sort Students =====");
+
+    println!("1. Sort by Name");
+    println!("2. Sort by Marks");
+    println!("3. Sort by Age");
+
+    let choice = read_u32("Choose an option:");
+
+    match choice {
+        1 => {
+            students.sort_by(|a, b| a.name.cmp(&b.name));
+            println!("Students sorted by name.");
+        }
+
+        2 => {
+            students.sort_by(|a, b| {
+                b.marks.partial_cmp(&a.marks).unwrap()
+            });
+
+            println!("Students sorted by marks.");
+        }
+
+        3 => {
+            students.sort_by_key(|student| student.age);
+
+            println!("Students sorted by age.");
+        }
+
+        _ => {
+            println!("Invalid option.");
+            return;
+        }
+    }
+
+    println!();
+
+    view_students(students);
+}
+
+pub fn filter_students(students: &Vec<Student>) {
+    println!("\n===== Filter Students =====");
+
+    println!("1. Grade A");
+    println!("2. Above Marks");
+    println!("3. Failed Students");
+
+    let choice = read_u32("Choose an option:");
+
+    match choice {
+        1 => filter_grade_a(students),
+        2 => filter_above_marks(students),
+        3 => filter_failed(students),
+        _ => println!("Invalid option."),
+    }
+}
+
+fn filter_grade_a(students: &Vec<Student>) {
+    println!("\n===== Grade A Students =====");
+
+    for student in students
+        .iter()
+        .filter(|student| student.grade == Grade::A)
+    {
+        display_student(student);
+    }
+}
+
+fn filter_above_marks(students: &Vec<Student>) {
+    let marks = read_f32("Enter minimum marks:");
+
+    println!("\n===== Students Above Marks =====");
+
+    for student in students
+        .iter()
+        .filter(|student| student.marks >= marks)
+    {
+        display_student(student);
+    }
+}
+
+fn filter_failed(students: &Vec<Student>) {
+    println!("\n===== Failed Students =====");
+
+    for student in students
+        .iter()
+        .filter(|student| student.grade == Grade::F)
+    {
+        display_student(student);
     }
 }
